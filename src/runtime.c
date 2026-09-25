@@ -1,7 +1,16 @@
 #include "native_functions.h"
+#include "allocator.h"
 
 void runtime_start(void *stack) {
     (void) stack;
+
+    char *memory = vm_alloc(4096);
+
+    if (memory == 0) {
+        println("memory allocation failed");
+        return;
+    }
+
     const char msg[] = "write potato: ";
     println(msg);
 

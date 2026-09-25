@@ -20,4 +20,9 @@ void *vm_alloc(uint64_t size) {
         -1,
         0
     );
+
+    if (result < 0)
+        return 0;
+
+    return (void *) result;
 }

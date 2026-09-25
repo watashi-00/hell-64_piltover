@@ -25,6 +25,7 @@ function sys_read
     ret
 
 function sys_mmap
+    mov r10, rcx
     mov rax, 9
     syscall
     ret
@@ -40,6 +41,7 @@ function sys_mprotect
     ret
 
 function sys_futex
+    mov r10, rcx
     mov rax, 202
     syscall
     ret
