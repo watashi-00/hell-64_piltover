@@ -12,6 +12,7 @@ add_executable(hell_64_piltover
         ${ASM_SOURCES}
         runtime.c
         include/native_functions.c
+        vm/vm.c
 )
 
 target_include_directories(hell_64_piltover PRIVATE

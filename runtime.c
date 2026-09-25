@@ -21,5 +21,4 @@ void runtime_start(void *stack)
     }
 
     println(buf);
-    println("\n");
 }
