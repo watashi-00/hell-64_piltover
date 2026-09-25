@@ -5,10 +5,16 @@ project(hell_64_piltover C ASM)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
+file(GLOB ASM_SOURCES CONFIGURE_DEPENDS
+        "${CMAKE_CURRENT_SOURCE_DIR}/asm/*.S")
+
 add_executable(hell_64_piltover
-        start.S
+        ${ASM_SOURCES}
         runtime.c
-        include/native_functions.h
+)
+
+target_include_directories(hell_64_piltover PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 target_compile_options(hell_64_piltover PRIVATE
