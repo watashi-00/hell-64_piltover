@@ -16,6 +16,8 @@ long sys_munmap(void *addr, long length);
 
 long sys_mprotect(void *addr, long length, long prot);
 
+void sys_exit(int code);
+
 long println_n(const char *str, long len);
 
 long scan_n(void *buf, long count);
