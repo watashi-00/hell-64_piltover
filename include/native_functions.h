@@ -8,9 +8,11 @@
 long sys_write(int fd, const void *buf, long count);
 long sys_read(int fd, void *buf, long count);
 
+long sys_mmap(void *addr, long length, long prot,
+        long flags, long fd, long offset);
+
 long println_n(const char *str, long len);
 #define println(str) println_n(str, sizeof(str))
-
 
 long scan_n(void *buf, long count);
 #define scan(buf) scan_n(buf, sizeof(buf))

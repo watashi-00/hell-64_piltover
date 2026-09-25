@@ -13,6 +13,8 @@ add_executable(hell_64_piltover
         src/runtime.c
         include/native_functions.c
         src/vm.c
+        include/allocator.h
+        src/allocator.c
 )
 
 target_include_directories(hell_64_piltover PRIVATE
