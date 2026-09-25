@@ -7,6 +7,7 @@
 .global sys_mprotect
 .global sys_futex
 .global sys_exit
+.global sys_clone
 
 .macro function name
     .type \name, @function
@@ -47,3 +48,9 @@ function sys_exit
     mov rax, 60
     syscall
     hlt
+
+function sys_clone
+    mov r10, rcx
+    mov rax, 56
+    syscall
+    ret
