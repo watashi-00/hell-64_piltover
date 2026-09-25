@@ -11,6 +11,13 @@ void runtime_start(void *stack) {
         return;
     }
 
+    memory[0] = 'P';
+    memory[1] = 'O';
+    memory[2] = '\n';
+    memory[3] = '\0';
+
+    println(memory);
+
     const char msg[] = "write potato: ";
     println(msg);
 

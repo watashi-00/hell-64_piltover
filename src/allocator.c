@@ -26,3 +26,7 @@ void *vm_alloc(uint64_t size) {
 
     return (void *) result;
 }
+
+long vm_free(void *ptr, uint64_t size) {
+    long result = sys_munmap(ptr, (long) size);
+}
