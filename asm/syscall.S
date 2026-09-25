@@ -2,8 +2,11 @@
 
 .global sys_write
 .global sys_read
-.type sys_write, @function
-.type sys_read, @function
+
+.macro function name
+    .type \name, @function
+\name:
+.endm
 
 sys_write:
     mov rax, 1
