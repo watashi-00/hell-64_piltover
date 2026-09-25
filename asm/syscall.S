@@ -13,37 +13,37 @@
 \name:
 .endm
 
-sys_write:
+function sys_write
     mov rax, 1
     syscall
     ret
 
-sys_read:
+function sys_read
     mov rax, 0
     syscall
     ret
 
-sys_mmap:
+function sys_mmap
     mov rax, 9
     syscall
     ret
 
-sys_munmap:
+function sys_munmap
     mov rax, 11
     syscall
     ret
 
-sys_mprotect:
+function sys_mprotect
     mov rax, 10
-    sycall
+    syscall
     ret
 
-sys_futex:
+function sys_futex
     mov rax, 202
     syscall
     ret
 
-sys_exit:
+function sys_exit
     mov rax, 60
     syscall
     hlt
