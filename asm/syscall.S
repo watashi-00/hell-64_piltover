@@ -17,3 +17,18 @@ sys_read:
     mov rax, 0
     syscall
     ret
+
+sys_mmap:
+    mov rax, 9
+    syscall
+    ret
+
+sys_munmap:
+    mov rax, 11
+    syscall
+    ret
+
+sys_mprotect:
+    mov rax, 10
+    sycall
+    ret
