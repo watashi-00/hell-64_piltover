@@ -1,38 +1,32 @@
 #include "native_functions.h"
 #include "allocator.h"
+#include "vm.h"
 
 void runtime_start(void *stack) {
     (void) stack;
 
-    char *memory = vm_alloc(4096);
+    Vm *vm = vm_create(4096);
 
-    if (memory == 0) {
-        println("memory allocation failed");
+    if (vm == 0) {
+        println("VM Creation failed");
         return;
     }
 
-    memory[0] = 'P';
-    memory[1] = 'O';
-    memory[2] = '\n';
-    memory[3] = '\0';
+    VmTask *task = vm_task_create(vm, 4096);
 
-    println(memory);
-
-    const char msg[] = "write potato: ";
-    println(msg);
-
-    char buf[128];
-    scan(buf);
-
-    char p[] = "potato";
-
-    bool e = string_equals(p, buf);
-
-    if (e) {
-        println("you wrote potato\n");
-    } else {
-        println("you didn't wrote potato\n");
+    if (task == 0) {
+        println("Task Creation failed");
+        vm_destroy(vm);
+        return;
     }
 
-    println(buf);
+    task->registers[0] = 42;
+
+    if (task->registers[0] == 42) {
+        println("vm lifecycle ok");
+    }
+
+    vm_task_destroy(task);
+    vm_destroy(vm);
+
 }
