@@ -50,9 +50,11 @@ typedef enum {
 } Opcode;
 
 Vm *vm_create(uint64_t shared_mem_size);
+
 void vm_destroy(Vm *vm);
 
 VmTask *vm_task_create(Vm *vm, uint64_t stack_size);
+
 void vm_task_destroy(VmTask *vm_task);
 
 #endif //HELL_64_PILTOVER_VM_H

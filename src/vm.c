@@ -37,3 +37,41 @@ void vm_destroy(Vm *vm) {
 
     vm_free_n(vm, sizeof(Vm));
 }
+
+VmTask *vm_task_create(Vm *vm, uint64_t stack_size) {
+    if (vm == 0)
+        return 0;
+
+    VmTask *task = vm_alloc(sizeof(VmTask));
+
+    if (task == 0)
+        return 0;
+
+    task->vm = vm;
+
+    for (int i = 0; i < 16; i++)
+        task->registers[i] = 0;
+
+    task->pc = 0;
+
+    task->stack = vm_alloc(stack_size);
+
+    if (task->stack == 0) {
+        vm_free_n(task, sizeof(VmTask));
+        return 0;
+    }
+
+    task->stack_size = stack_size;
+
+    return task;
+}
+
+void vm_task_destroy(VmTask *task) {
+    if (task == 0)
+        return;
+
+    if (task->stack != 0)
+        vm_free_n(task->stack, task->stack_size);
+
+    vm_free_n(task, sizeof(VmTask));
+}
