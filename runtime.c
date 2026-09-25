@@ -1,6 +1,5 @@
 #include "native_functions.h"
 
-
 void runtime_start(void *stack)
 {
     (void)stack;

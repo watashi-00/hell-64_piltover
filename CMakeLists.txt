@@ -17,6 +17,7 @@ add_executable(hell_64_piltover
 
 target_include_directories(hell_64_piltover PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/vm/include
 )
 
 target_compile_options(hell_64_piltover PRIVATE
