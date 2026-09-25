@@ -18,8 +18,6 @@ void runtime_start(void *stack) {
 
     println(memory);
 
-    vm_free(memory, sizeof(memory));
-
     const char msg[] = "write potato: ";
     println(msg);
 

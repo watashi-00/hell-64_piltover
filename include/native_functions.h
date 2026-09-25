@@ -18,9 +18,7 @@ long sys_mprotect(void *addr, long length, long prot);
 
 long println_n(const char *str, long len);
 
-
 long scan_n(void *buf, long count);
-
 
 #define bool _Bool
 #define true 1
