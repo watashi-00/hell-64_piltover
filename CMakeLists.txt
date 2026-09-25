@@ -17,6 +17,8 @@ add_executable(hell_64_piltover
         include/allocator.h
         src/allocator.c
         include/bytecode.h
+        include/validator.h
+        src/validator.c
 )
 
 target_include_directories(hell_64_piltover PRIVATE
