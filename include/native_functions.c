@@ -5,11 +5,12 @@
 #include "native_functions.h"
 
 long println_n(const char *str, long len);
+
 long scan_n(void *buf, long len);
+
 bool string_equals(const char *str1, const char *str2);
 
 long println_n(const char *str, long len) {
-
     for (long i = 0; i < len; i++) {
         if (str[i] == '\0')
             return sys_write(1, str, i);

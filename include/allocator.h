@@ -7,6 +7,7 @@
 #include <stdint.h>
 
 void *vm_alloc(uint64_t size);
+
 void vm_free(void *ptr, uint64_t size);
 
 #endif //HELL_64_PILTOVER_ALLOCATOR_H

@@ -11,21 +11,21 @@ typedef struct vm Vm;
 typedef struct vm_task VmTask;
 
 struct vm {
-    uint8_t     *bytecode;
-    uint64_t    bytecode_size;
+    uint8_t *bytecode;
+    uint64_t bytecode_size;
 
-    uint8_t     *shared_mem;
-    uint64_t    shared_mem_size;
+    uint8_t *shared_mem;
+    uint64_t shared_mem_size;
 };
 
 struct vm_task {
-    Vm          *vm;
+    Vm *vm;
 
-    uint64_t    registers[16];
-    uint64_t    pc;
+    uint64_t registers[16];
+    uint64_t pc;
 
-    uint8_t     *stack;
-    uint64_t    stack_size;
+    uint8_t *stack;
+    uint64_t stack_size;
 };
 
 typedef enum {
