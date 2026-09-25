@@ -8,6 +8,8 @@
 
 void *vm_alloc(uint64_t size);
 
-void vm_free(void *ptr, uint64_t size);
+void vm_free_n(void *ptr, uint64_t size);
+
+#define vm_free(ptr, size) vm_free_n(ptr, size)
 
 #endif //HELL_64_PILTOVER_ALLOCATOR_H

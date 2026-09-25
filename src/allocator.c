@@ -11,6 +11,10 @@
 #define MAP_PRIVATE    0x02
 #define MAP_ANONYMOUS   0x20
 
+void *vm_alloc(uint64_t size);
+
+void vm_free(void *ptr, uint64_t size);
+
 void *vm_alloc(uint64_t size) {
     long result = sys_mmap(
         0,
@@ -27,6 +31,6 @@ void *vm_alloc(uint64_t size) {
     return (void *) result;
 }
 
-long vm_free(void *ptr, uint64_t size) {
-    long result = sys_munmap(ptr, (long) size);
+long vm_free_n(void *ptr, uint64_t size) {
+    return sys_munmap(ptr, (long) size);
 }
