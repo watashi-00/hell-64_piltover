@@ -28,5 +28,4 @@ void runtime_start(void *stack) {
 
     vm_task_destroy(task);
     vm_destroy(vm);
-
 }

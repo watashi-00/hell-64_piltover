@@ -16,6 +16,7 @@ add_executable(hell_64_piltover
         src/vm.c
         include/allocator.h
         src/allocator.c
+        include/bytecode.h
 )
 
 target_include_directories(hell_64_piltover PRIVATE
@@ -37,7 +38,7 @@ target_link_options(hell_64_piltover PRIVATE
 # Testing layer (development only)
 option(BUILD_TESTING "Build the test suite" ON)
 
-if(BUILD_TESTING)
+if (BUILD_TESTING)
     enable_testing()
 
     file(GLOB TEST_SOURCES CONFIGURE_DEPENDS
@@ -69,4 +70,4 @@ if(BUILD_TESTING)
     )
 
     add_test(NAME run_tests COMMAND run_tests)
-endif()
+endif ()

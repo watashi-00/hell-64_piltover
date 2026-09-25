@@ -28,27 +28,6 @@ struct vm_task {
     uint64_t stack_size;
 };
 
-typedef enum {
-    OP_MOV,
-    OP_MOVI,
-    OP_ADD,
-    OP_SUB,
-    OP_MUL,
-    OP_XOR,
-    OP_LOAD,
-    OP_STORE,
-    OP_JMP,
-    OP_JZ,
-    OP_CALL,
-    OP_RET,
-    OP_ATOMIC_ADD,
-    OP_CAS,
-    OP_SPAWN,
-    OP_JOIN,
-    OP_YIELD,
-    OP_HALT
-} Opcode;
-
 Vm *vm_create(uint64_t shared_mem_size);
 
 void vm_destroy(Vm *vm);

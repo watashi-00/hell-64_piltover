@@ -1,6 +1,7 @@
 #include "test_harness.h"
 
 extern void run_allocator_tests(void);
+
 extern void run_vm_tests(void);
 
 void runtime_start(void *stack) {
