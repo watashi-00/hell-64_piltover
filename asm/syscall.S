@@ -32,3 +32,13 @@ sys_mprotect:
     mov rax, 10
     sycall
     ret
+
+sys_futex:
+    mov rax, 202
+    syscall
+    ret
+
+sys_exit:
+    mov rax, 60
+    syscall
+    hlt
