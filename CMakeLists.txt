@@ -11,6 +11,7 @@ file(GLOB ASM_SOURCES CONFIGURE_DEPENDS
 add_executable(hell_64_piltover
         ${ASM_SOURCES}
         runtime.c
+        include/native_functions.c
 )
 
 target_include_directories(hell_64_piltover PRIVATE
