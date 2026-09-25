@@ -4,11 +4,21 @@
 
 #ifndef HELL_64_PILTOVER_NATIVE_FUNCTIONS_H
 #define HELL_64_PILTOVER_NATIVE_FUNCTIONS_H
-#include <stdio.h>
 
-ssize_t sys_write(int fd, const void *buf, size_t count);
-ssize_t println_n(const char *str, size_t len);
+long sys_write(int fd, const void *buf, long count);
+long sys_read(int fd, void *buf, long count);
 
+long println_n(const char *str, long len);
 #define println(str) println_n(str, sizeof(str))
+
+
+long scan_n(void *buf, long count);
+#define scan(buf) scan_n(buf, sizeof(buf))
+
+#define bool _Bool
+#define true 1
+#define false 0
+
+bool string_equals(const char *a, const char *b);
 
 #endif //HELL_64_PILTOVER_NATIVE_FUNCTIONS_H
