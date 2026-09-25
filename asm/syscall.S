@@ -2,6 +2,11 @@
 
 .global sys_write
 .global sys_read
+.global sys_mmap
+.global sys_munmap
+.global sys_mprotect
+.global sys_futex
+.global sys_exit
 
 .macro function name
     .type \name, @function
