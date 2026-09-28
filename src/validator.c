@@ -9,7 +9,12 @@ static int valid_register(uint8_t reg) {
     return reg < 16;
 }
 
-static int validate_instruction(const VmInstruction *instruction) {
+static int valid_target(uint64_t target, uint64_t instruction_count) {
+    return target < instruction_count;
+}
+
+static int validate_instruction(const VmInstruction *instruction,
+                                uint64_t instruction_count) {
     switch (instruction->opcode) {
         case VM_OP_MOV:
             return valid_register(instruction->dst) &&
@@ -33,6 +38,38 @@ static int validate_instruction(const VmInstruction *instruction) {
         case VM_OP_STORE:
             return valid_register(instruction->src1) &&
                    valid_register(instruction->src2);
+
+        case VM_OP_JMP:
+            return valid_target(instruction->operand, instruction_count);
+
+        case VM_OP_JZ:
+            return valid_register(instruction->src1) &&
+                   valid_target(instruction->operand, instruction_count);
+
+        case VM_OP_CALL:
+            return valid_target(instruction->operand, instruction_count);
+
+        case VM_OP_RET:
+            return 1;
+
+        case VM_OP_ATOMIC_ADD:
+            return valid_register(instruction->dst) &&
+                   valid_register(instruction->src1);
+
+        case VM_OP_CAS:
+            return valid_register(instruction->dst) &&
+                   valid_register(instruction->src1) &&
+                   valid_register(instruction->src2);
+
+        case VM_OP_SPAWN:
+            return valid_target(instruction->operand, instruction_count);
+
+        case VM_OP_JOIN:
+            return valid_register(instruction->src1);
+
+        case VM_OP_YIELD:
+        case VM_OP_HALT:
+            return 1;
 
         default:
             return 0;
@@ -60,7 +97,7 @@ int vm_validate_bytecode(const Vm *vm) {
                 (VmInstruction *) (vm->bytecode +
                                    i * sizeof(VmInstruction));
 
-        if (!validate_instruction(instruction))
+        if (!validate_instruction(instruction, instruction_count))
             return 0;
     }
 
