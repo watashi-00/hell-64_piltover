@@ -53,8 +53,8 @@ static int validate_instruction(const VmInstruction *instruction,
             return 1;
 
         case VM_OP_ATOMIC_ADD:
-            return valid_register(instruction->dst) &&
-                   valid_register(instruction->src1);
+            return valid_register(instruction->src1) &&
+                   valid_register(instruction->src2);
 
         case VM_OP_CAS:
             return valid_register(instruction->dst) &&
