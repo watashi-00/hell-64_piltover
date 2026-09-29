@@ -6,6 +6,8 @@
 #define HELL_64_PILTOVER_JIT_H
 
 #include <stdint.h>
+#include "bytecode.h"
+#include "vm.h"
 
 typedef struct {
     uint8_t *data;
@@ -20,8 +22,12 @@ int jit_code_buffer_finalize(JitCodeBuffer *buffer);
 void jit_code_buffer_destroy(JitCodeBuffer *buffer);
 
 typedef uint64_t (*JitFunction)(void);
+typedef void (*JitTaskFunction)(VmTask *task);
 
 JitFunction jit_code_buffer_function(const JitCodeBuffer *buffer);
 int jit_emit_return_42(JitCodeBuffer *buffer);
+int jit_compile_block(JitCodeBuffer *buffer,
+                      const VmInstruction *instructions,
+                      uint64_t instruction_count);
 
 #endif // HELL_64_PILTOVER_JIT_H
