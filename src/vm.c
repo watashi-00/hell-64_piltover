@@ -63,6 +63,7 @@ VmTask *vm_task_create(Vm *vm, uint64_t stack_size) {
     }
 
     task->stack_size = stack_size;
+    task->call_depth = 0;
 
     return task;
 }
@@ -96,6 +97,39 @@ int vm_execute(VmTask *task) {
                                    task->pc * sizeof(VmInstruction));
 
         switch (instruction->opcode) {
+            case VM_OP_MOV:
+                task->registers[instruction->dst] =
+                        task->registers[instruction->src1];
+                task->pc++;
+                break;
+            case VM_OP_MOVI:
+                task->registers[instruction->dst] = instruction->operand;
+                task->pc++;
+                break;
+            case VM_OP_ADD:
+                task->registers[instruction->dst] =
+                        task->registers[instruction->src1] +
+                        task->registers[instruction->src2];
+                task->pc++;
+                break;
+            case VM_OP_SUB:
+                task->registers[instruction->dst] =
+                        task->registers[instruction->src1] -
+                        task->registers[instruction->src2];
+                task->pc++;
+                break;
+            case VM_OP_MUL:
+                task->registers[instruction->dst] =
+                        task->registers[instruction->src1] *
+                        task->registers[instruction->src2];
+                task->pc++;
+                break;
+            case VM_OP_XOR:
+                task->registers[instruction->dst] =
+                        task->registers[instruction->src1] ^
+                        task->registers[instruction->src2];
+                task->pc++;
+                break;
             case VM_OP_HALT:
                 task->pc++;
                 return 1;
@@ -107,6 +141,18 @@ int vm_execute(VmTask *task) {
                     task->pc = instruction->operand;
                 else
                     task->pc++;
+                break;
+            case VM_OP_CALL:
+                if (task->stack == 0 || task->stack_size < sizeof(uint64_t) ||
+                    task->stack_size / sizeof(uint64_t) <= task->call_depth)
+                    return 0;
+                ((uint64_t *) task->stack)[task->call_depth++] = task->pc + 1;
+                task->pc = instruction->operand;
+                break;
+            case VM_OP_RET:
+                if (task->call_depth == 0)
+                    return 0;
+                task->pc = ((uint64_t *) task->stack)[--task->call_depth];
                 break;
             default:
                 /* Unsupported instructions return safely after a checked fetch. */

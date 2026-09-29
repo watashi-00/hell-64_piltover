@@ -3,6 +3,7 @@
 extern void run_allocator_tests(void);
 
 extern void run_vm_tests(void);
+extern void run_jit_tests(void);
 
 void runtime_start(void *stack) {
     (void) stack;
@@ -13,6 +14,7 @@ void runtime_start(void *stack) {
 
     run_allocator_tests();
     run_vm_tests();
+    run_jit_tests();
 
     println("----------------------------------------\n");
     if (g_tests_failed == 0) {

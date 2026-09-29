@@ -27,6 +27,7 @@ struct vm_task {
 
     uint8_t *stack;
     uint64_t stack_size;
+    uint64_t call_depth;
 };
 
 Vm *vm_create(uint64_t shared_mem_size);

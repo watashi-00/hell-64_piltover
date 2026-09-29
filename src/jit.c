@@ -106,7 +106,11 @@ int jit_compile_block(JitCodeBuffer *buffer,
     for (uint64_t i = 0; i < instruction_count; i++) {
         const VmInstruction *instruction = &instructions[i];
 
-        if (instruction->opcode == VM_OP_HALT)
+        if (instruction->opcode == VM_OP_HALT ||
+            instruction->opcode == VM_OP_JMP ||
+            instruction->opcode == VM_OP_JZ ||
+            instruction->opcode == VM_OP_CALL ||
+            instruction->opcode == VM_OP_RET)
             break;
 
         if (instruction->opcode == VM_OP_MOVI) {
