@@ -16,6 +16,7 @@ add_executable(hell_64_piltover
         src/vm.c
         include/allocator.h
         src/allocator.c
+        src/jit.c
         include/bytecode.h
         include/validator.h
         src/validator.c
@@ -52,6 +53,8 @@ if (BUILD_TESTING)
             include/native_functions.c
             src/vm.c
             src/allocator.c
+            src/jit.c
+            src/validator.c
     )
 
     target_include_directories(run_tests PRIVATE
