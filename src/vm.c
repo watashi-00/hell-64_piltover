@@ -4,6 +4,7 @@
 
 #include "vm.h"
 #include "allocator.h"
+#include "validator.h"
 
 Vm *vm_create(uint64_t shared_mem_size) {
     Vm *vm = vm_alloc(sizeof(Vm));
@@ -74,4 +75,44 @@ void vm_task_destroy(VmTask *task) {
         vm_free_n(task->stack, task->stack_size);
 
     vm_free_n(task, sizeof(VmTask));
+}
+
+int vm_execute(VmTask *task) {
+    Vm *vm;
+    uint64_t instruction_count;
+
+    if (task == 0 || task->vm == 0)
+        return 0;
+
+    vm = task->vm;
+    if (!vm_validate_bytecode(vm))
+        return 0;
+
+    instruction_count = vm->bytecode_size / sizeof(VmInstruction);
+
+    while (task->pc < instruction_count) {
+        VmInstruction *instruction =
+                (VmInstruction *) (vm->bytecode +
+                                   task->pc * sizeof(VmInstruction));
+
+        switch (instruction->opcode) {
+            case VM_OP_HALT:
+                task->pc++;
+                return 1;
+            case VM_OP_JMP:
+                task->pc = instruction->operand;
+                break;
+            case VM_OP_JZ:
+                if (task->registers[instruction->src1] == 0)
+                    task->pc = instruction->operand;
+                else
+                    task->pc++;
+                break;
+            default:
+                /* Unsupported instructions return safely after a checked fetch. */
+                return 0;
+        }
+    }
+
+    return 0;
 }
