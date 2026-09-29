@@ -80,18 +80,18 @@ static int emit_u64(JitCodeBuffer *buffer, uint64_t value) {
 }
 
 static uint8_t register_offset(uint8_t reg) {
-    return (uint8_t) (reg * sizeof(uint64_t));
+    return (uint8_t) (sizeof(Vm *) + reg * sizeof(uint64_t));
 }
 
 static int emit_load(JitCodeBuffer *buffer, uint8_t physical, uint8_t vm_reg) {
-    return jit_code_buffer_emit(buffer, 0x4c) &&
+    return jit_code_buffer_emit(buffer, 0x48) &&
            jit_code_buffer_emit(buffer, 0x8b) &&
            jit_code_buffer_emit(buffer, (uint8_t) (0x47 | (physical << 3))) &&
            jit_code_buffer_emit(buffer, register_offset(vm_reg));
 }
 
 static int emit_store(JitCodeBuffer *buffer, uint8_t vm_reg, uint8_t physical) {
-    return jit_code_buffer_emit(buffer, 0x4c) &&
+    return jit_code_buffer_emit(buffer, 0x48) &&
            jit_code_buffer_emit(buffer, 0x89) &&
            jit_code_buffer_emit(buffer, (uint8_t) (0x47 | (physical << 3))) &&
            jit_code_buffer_emit(buffer, register_offset(vm_reg));
@@ -125,25 +125,25 @@ int jit_compile_block(JitCodeBuffer *buffer,
                 if (!emit_load(buffer, 1, instruction->src2))
                     return 0;
                 if (instruction->opcode == VM_OP_ADD) {
-                    if (!jit_code_buffer_emit(buffer, 0x4c) ||
+                    if (!jit_code_buffer_emit(buffer, 0x48) ||
                         !jit_code_buffer_emit(buffer, 0x01) ||
-                        !jit_code_buffer_emit(buffer, 0xc0))
+                        !jit_code_buffer_emit(buffer, 0xc8))
                         return 0;
                 } else if (instruction->opcode == VM_OP_SUB) {
-                    if (!jit_code_buffer_emit(buffer, 0x4c) ||
+                    if (!jit_code_buffer_emit(buffer, 0x48) ||
                         !jit_code_buffer_emit(buffer, 0x29) ||
-                        !jit_code_buffer_emit(buffer, 0xc0))
+                        !jit_code_buffer_emit(buffer, 0xc8))
                         return 0;
                 } else if (instruction->opcode == VM_OP_XOR) {
-                    if (!jit_code_buffer_emit(buffer, 0x4c) ||
+                    if (!jit_code_buffer_emit(buffer, 0x48) ||
                         !jit_code_buffer_emit(buffer, 0x31) ||
-                        !jit_code_buffer_emit(buffer, 0xc0))
+                        !jit_code_buffer_emit(buffer, 0xc8))
                         return 0;
                 } else if (instruction->opcode == VM_OP_MUL) {
-                    if (!jit_code_buffer_emit(buffer, 0x4d) ||
+                    if (!jit_code_buffer_emit(buffer, 0x48) ||
                         !jit_code_buffer_emit(buffer, 0x0f) ||
                         !jit_code_buffer_emit(buffer, 0xaf) ||
-                        !jit_code_buffer_emit(buffer, 0xc2))
+                        !jit_code_buffer_emit(buffer, 0xc1))
                         return 0;
                 } else {
                     return 0;

@@ -110,6 +110,7 @@ int vm_execute(VmTask *task) {
                 break;
             default:
                 /* Unsupported instructions return safely after a checked fetch. */
+                task->pc++;
                 return 0;
         }
     }
