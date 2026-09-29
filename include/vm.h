@@ -6,6 +6,7 @@
 #define HELL_64_PILTOVER_VM_H
 
 #include <stdint.h>
+#include "bytecode.h"
 
 typedef struct vm Vm;
 typedef struct vm_task VmTask;
@@ -35,5 +36,7 @@ void vm_destroy(Vm *vm);
 VmTask *vm_task_create(Vm *vm, uint64_t stack_size);
 
 void vm_task_destroy(VmTask *vm_task);
+
+int vm_execute(VmTask *task);
 
 #endif //HELL_64_PILTOVER_VM_H
